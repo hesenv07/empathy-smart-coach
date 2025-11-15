@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Switch } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Switch, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAppContext } from '../src/context/AppContext';
 
@@ -23,53 +23,59 @@ export default function MonthlyPlan() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Monthly Plan</Text>
-      <Text style={styles.subtitle}>Set up your automatic investment schedule</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Monthly Plan</Text>
+        <Text style={styles.subtitle}>Set up your automatic investment schedule</Text>
 
-      <View style={styles.form}>
-        <View style={styles.field}>
-          <Text style={styles.label}>Monthly Amount</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="$500"
-            placeholderTextColor="#666"
-            value={amount}
-            onChangeText={setAmount}
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>Payment Day</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="15"
-            placeholderTextColor="#666"
-            value={dayOfMonth}
-            onChangeText={setDayOfMonth}
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={styles.switchContainer}>
-          <View>
-            <Text style={styles.switchLabel}>Auto-Invest</Text>
-            <Text style={styles.switchSubtext}>Let Empathy choose investments automatically</Text>
+        <View style={styles.form}>
+          <View style={styles.field}>
+            <Text style={styles.label}>Monthly Amount</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="$500"
+              placeholderTextColor="#666"
+              value={amount}
+              onChangeText={setAmount}
+              keyboardType="numeric"
+              returnKeyType="done"
+              blurOnSubmit={true}
+            />
           </View>
-          <Switch
-            value={autoInvest}
-            onValueChange={setAutoInvest}
-            trackColor={{ false: '#2A2E45', true: '#4CAF50' }}
-            thumbColor="#FFFFFF"
-          />
-        </View>
-      </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleContinue}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
+          <View style={styles.field}>
+            <Text style={styles.label}>Payment Day</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="15"
+              placeholderTextColor="#666"
+              value={dayOfMonth}
+              onChangeText={setDayOfMonth}
+              keyboardType="numeric"
+              returnKeyType="done"
+              blurOnSubmit={true}
+            />
+          </View>
+
+          <View style={styles.switchContainer}>
+            <View>
+              <Text style={styles.switchLabel}>Auto-Invest</Text>
+              <Text style={styles.switchSubtext}>Let Empathy choose investments automatically</Text>
+            </View>
+            <Switch
+              value={autoInvest}
+              onValueChange={setAutoInvest}
+              trackColor={{ false: '#2A2E45', true: '#4CAF50' }}
+              thumbColor="#FFFFFF"
+            />
+          </View>
+        </View>
+
+        <TouchableOpacity style={styles.button} onPress={handleContinue}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

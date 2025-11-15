@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAppContext } from '../src/context/AppContext';
 
@@ -18,46 +18,54 @@ export default function CardLinking() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Connect Your Card</Text>
-      <Text style={styles.subtitle}>Link your payment method to start investing</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Connect Your Card</Text>
+        <Text style={styles.subtitle}>Link your payment method to start investing</Text>
 
-      <View style={styles.form}>
-        <TextInput
-          style={styles.input}
-          placeholder="Card Number"
-          placeholderTextColor="#666"
-          value={cardNumber}
-          onChangeText={setCardNumber}
-          keyboardType="numeric"
-          maxLength={16}
-        />
-        <View style={styles.row}>
+        <View style={styles.form}>
           <TextInput
-            style={[styles.input, styles.halfInput]}
-            placeholder="MM/YY"
+            style={styles.input}
+            placeholder="Card Number"
             placeholderTextColor="#666"
-            value={expiry}
-            onChangeText={setExpiry}
-            maxLength={5}
-          />
-          <TextInput
-            style={[styles.input, styles.halfInput]}
-            placeholder="CVV"
-            placeholderTextColor="#666"
-            value={cvv}
-            onChangeText={setCvv}
+            value={cardNumber}
+            onChangeText={setCardNumber}
             keyboardType="numeric"
-            maxLength={3}
-            secureTextEntry
+            maxLength={16}
+            returnKeyType="done"
+            blurOnSubmit={true}
           />
+          <View style={styles.row}>
+            <TextInput
+              style={[styles.input, styles.halfInput]}
+              placeholder="MM/YY"
+              placeholderTextColor="#666"
+              value={expiry}
+              onChangeText={setExpiry}
+              maxLength={5}
+              returnKeyType="done"
+              blurOnSubmit={true}
+            />
+            <TextInput
+              style={[styles.input, styles.halfInput]}
+              placeholder="CVV"
+              placeholderTextColor="#666"
+              value={cvv}
+              onChangeText={setCvv}
+              keyboardType="numeric"
+              maxLength={3}
+              secureTextEntry
+              returnKeyType="done"
+              blurOnSubmit={true}
+            />
+          </View>
         </View>
-      </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleConnect}>
-        <Text style={styles.buttonText}>Connect Card</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={handleConnect}>
+          <Text style={styles.buttonText}>Connect Card</Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
